@@ -10,9 +10,51 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 0) do
+ActiveRecord::Schema.define(version: 2018_05_21_151637) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
+  create_table "bookings", force: :cascade do |t|
+    t.bigint "user_id"
+    t.string "place"
+    t.string "references"
+    t.integer "pricce"
+    t.date "start_date"
+    t.date "end_date"
+    t.string "status"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_bookings_on_user_id"
+  end
+
+  create_table "places", force: :cascade do |t|
+    t.string "title"
+    t.string "address"
+    t.text "description"
+    t.integer "price"
+    t.text "equipment"
+    t.string "destroy_pack"
+    t.string "category"
+    t.integer "rate"
+    t.integer "sleeping"
+    t.bigint "user_id"
+    t.text "tool"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_places_on_user_id"
+  end
+
+  create_table "users", force: :cascade do |t|
+    t.string "name"
+    t.string "address"
+    t.string "phone_number"
+    t.string "email"
+    t.integer "age"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  add_foreign_key "bookings", "users"
+  add_foreign_key "places", "users"
 end
